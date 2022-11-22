@@ -13,17 +13,21 @@ reader.on("line", (line) => {
 reader.on("close", () => {
   const num = Number(lines[0]);
   let arr = [];
-  for (let i = 0; i < num; i++) {
-    let ary = lines[i + 1].split(" ");
-    arr.push([ary[0], Number(ary[1])]);
+  for (let i = 1; i <= num; i++) {
+    let ary = lines[i].split(" ");
+    arr.push([Number(ary[0]), Number(ary[1]), Number(ary[2])]);
   }
-  const f = function (a, b) {
-    return a[1] - b[1];
-  };
   arr.sort((a, b) => {
-    return a[1] < b[1] ? -1 : 1;
+    return b[2] - a[2];
   });
-  arr.forEach((element) => {
-    console.log(element[0]);
+  arr.sort((a, b) => {
+    return b[1] - a[1];
   });
+  arr.sort((a, b) => {
+    return b[0] - a[0];
+  });
+  for (let i = 0; i < num; i++) {
+    let ans = arr[i].join(" ");
+    console.log(ans);
+  }
 });
