@@ -11,23 +11,29 @@ reader.on("line", (line) => {
   lines.push(line);
 });
 reader.on("close", () => {
-  const num = Number(lines[0]);
-  let arr = [];
+  const ele = lines[0].split(" ");
+  const num = Number(ele[0]);
+  const uni = Number(ele[1]);
+  const ary = [];
   for (let i = 1; i <= num; i++) {
-    let ary = lines[i].split(" ");
-    arr.push([Number(ary[0]), Number(ary[1]), Number(ary[2])]);
+    let x = lines[i];
+    ary.push(Number(x));
   }
-  arr.sort((a, b) => {
-    return b[2] - a[2];
+  ary.sort((a, b) => {
+    return a - b;
   });
-  arr.sort((a, b) => {
-    return b[1] - a[1];
-  });
-  arr.sort((a, b) => {
-    return b[0] - a[0];
-  });
-  for (let i = 0; i < num; i++) {
-    let ans = arr[i].join(" ");
-    console.log(ans);
+  const a = ary[num - 1] / uni;
+  for (let i = 1; i <= num; i++) {
+    let x = Number(lines[i]) / uni;
+    let y = [];
+    for (let j = 0; j < a; j++) {
+      if (j < x) {
+        y.push("*");
+      } else {
+        y.push(".");
+      }
+    }
+    let ans = y.join("");
+    console.log(i + ":" + ans);
   }
 });
