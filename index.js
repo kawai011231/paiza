@@ -11,29 +11,38 @@ reader.on("line", (line) => {
   lines.push(line);
 });
 reader.on("close", () => {
-  const ele = lines[0].split(" ");
-  const num = Number(ele[0]);
-  const uni = Number(ele[1]);
+  const x = Number(lines[0]);
   const ary = [];
-  for (let i = 1; i <= num; i++) {
-    let x = lines[i];
-    ary.push(Number(x));
+  let ans = 0;
+  let boo = true;
+  let count = 0;
+  for (let i = 0; i < x; i++) {
+    ary.push(lines[i + 1]);
   }
-  ary.sort((a, b) => {
-    return a - b;
-  });
-  const a = ary[num - 1] / uni;
-  for (let i = 1; i <= num; i++) {
-    let x = Number(lines[i]) / uni;
-    let y = [];
-    for (let j = 0; j < a; j++) {
-      if (j < x) {
-        y.push("*");
-      } else {
-        y.push(".");
+  for (let i = 0; i < x; i++) {
+    let menu = ary[i];
+    if (menu === "melon" && boo) {
+      boo = false;
+      count = 0;
+      ans = ans + 1;
+      //   console.log(count)
+    } else if (menu === "melon" && boo === false) {
+      count = count + 1;
+      if (count === 11) {
+        count = 0;
+        boo = true;
       }
+      //   console.log(count)
+    } else if (menu !== "melon" && boo === true) {
+      //   console.log(count)
+    } else if (menu !== "melon" && boo === false) {
+      count = count + 1;
+      if (count === 11) {
+        count = 0;
+        boo = true;
+      }
+      //   console.log(count)
     }
-    let ans = y.join("");
-    console.log(i + ":" + ans);
   }
+  console.log(ans);
 });
