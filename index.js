@@ -11,38 +11,20 @@ reader.on("line", (line) => {
   lines.push(line);
 });
 reader.on("close", () => {
-  const input = lines[0].split(" ");
-  const n = Number(input[0]);
-  const m = Number(input[1]);
-  const l = Number(input[2]);
-  const pal = [];
-  const tim = [];
-  for (let i = 1; i <= m; i++) {
-    let a = lines[i].split(" ");
-    let b = [];
-    for (let j = 0; j < a.length; j++) {
-      b.push(Number(a[j]));
+  const n = Number(lines[0]);
+  const a = [];
+  for (let i = 1; i <= n; i++) {
+    let b = lines[i].split(" ");
+    for (let j = 0; j < 3; j++) {
+      b[j] = Number(b[j]);
     }
-    pal.push(b);
+    time1 = b[0];
+    time2 = b[1];
+    time3 = 24 - b[2];
+    time = time1 + time2 + time3;
+    a.push(time);
   }
-  for (let i = n + 1; i <= l + 3; i++) {
-    let a = lines[i].split(" ");
-    let b = [];
-    for (let j = 0; j < a.length; j++) {
-      b.push(Number(a[j]));
-    }
-    tim.push(b);
-  }
-  for (let i = 0; i < l - 1; i++) {
-    let dis = [];
-    for (let j = 0; j < n; j++) {
-      let x = tim[i + 1][j] - tim[i][j];
-      dis.push(x);
-    }
-    for (let j = 0; j < m; j++) {
-      if (dis.toString() === pal[j].toString()) {
-        console.log(j + 1);
-      }
-    }
-  }
+  a.sort((x, y) => x - y);
+  console.log(a[0]);
+  console.log(a[n - 1]);
 });
