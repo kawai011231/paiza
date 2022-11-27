@@ -1,58 +1,32 @@
-"use strict";
-function main(lines) {
-  // lines: Array<string>
-  function check(num) {
-    if (num == 1) {
-      return false;
-    } else if (num == 2) {
-      return true;
-    } else {
-      for (let i = 2; i < num; i++) {
-        if (num % i == 0) return false;
-
-        if (i + 1 == num) return true;
-      }
+process.stdin.resume();
+process.stdin.setEncoding('utf8');
+// 自分の得意な言語で
+// Let's チャレンジ！！
+var lines = [];
+var reader = require('readline').createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+reader.on('line', (line) => {
+  lines.push(line);
+});
+reader.on('close', () => {
+    const room=Number(lines[0].split(' ')[0])
+    const hum=Number(lines[0].split(' ')[1])
+    const time=Number(lines[0].split(' ')[2])
+    let full=[]
+    for(let i=0;i<hum;i++){
+        full.push(Number(lines[i+1]))
     }
-  }
-
-  const ary = lines[0].split(" ");
-  for (let i = 0; i < ary.length - 1; i++) {
-    ary[i] = ary[i].split(":");
-    ary[i][0] = Number(ary[i][0]);
-  }
-  const num = Number(ary[ary.length - 1]);
-
-  ary.pop();
-  ary.sort((a, b) => {
-    return a[0] - b[0];
-  });
-  let ansAry = [];
-  for (let i = 0; i < ary.length; i++) {
-    if (num % ary[i][0] === 0) {
-      ansAry.push(ary[i][1]);
+    for(let i=hum+1;i<time+hum+1;i++){
+        let a=Number(lines[i].split(' ')[0])
+        let b=Number(lines[i].split(' ')[1])
+        if(Number(lines[i-hum])===b){
+            console.log("Yes")
+        }else if(full.includes(b)){
+            console.log("No")
+        }else{
+            console.log("Yes")
+        }
     }
-  }
-  let ans = "";
-  if (ansAry.length > 0) {
-    ans = ansAry.join("");
-  } else if (check(num)) {
-    ans = "prime";
-  } else {
-    ans = num;
-  }
-  console.log(ans);
-}
-
-function runWithStdin() {
-  let input = "";
-  process.stdin.resume();
-  process.stdin.setEncoding("utf8");
-
-  process.stdin.on("data", (v) => {
-    input += v;
-  });
-  process.stdin.on("end", () => {
-    main(input.split("\n"));
-  });
-}
-runWithStdin();
+});
