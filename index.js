@@ -1,30 +1,58 @@
-process.stdin.resume();
-process.stdin.setEncoding("utf8");
-// 自分の得意な言語で
-// Let's チャレンジ！！
-var lines = [];
-var reader = require("readline").createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-reader.on("line", (line) => {
-  lines.push(line);
-});
-reader.on("close", () => {
-  const n = Number(lines[0]);
-  const a = [];
-  for (let i = 1; i <= n; i++) {
-    let b = lines[i].split(" ");
-    for (let j = 0; j < 3; j++) {
-      b[j] = Number(b[j]);
+"use strict";
+function main(lines) {
+  // lines: Array<string>
+  function check(num) {
+    if (num == 1) {
+      return false;
+    } else if (num == 2) {
+      return true;
+    } else {
+      for (let i = 2; i < num; i++) {
+        if (num % i == 0) return false;
+
+        if (i + 1 == num) return true;
+      }
     }
-    time1 = b[0];
-    time2 = b[1];
-    time3 = 24 - b[2];
-    time = time1 + time2 + time3;
-    a.push(time);
   }
-  a.sort((x, y) => x - y);
-  console.log(a[0]);
-  console.log(a[n - 1]);
-});
+
+  const ary = lines[0].split(" ");
+  for (let i = 0; i < ary.length - 1; i++) {
+    ary[i] = ary[i].split(":");
+    ary[i][0] = Number(ary[i][0]);
+  }
+  const num = Number(ary[ary.length - 1]);
+
+  ary.pop();
+  ary.sort((a, b) => {
+    return a[0] - b[0];
+  });
+  let ansAry = [];
+  for (let i = 0; i < ary.length; i++) {
+    if (num % ary[i][0] === 0) {
+      ansAry.push(ary[i][1]);
+    }
+  }
+  let ans = "";
+  if (ansAry.length > 0) {
+    ans = ansAry.join("");
+  } else if (check(num)) {
+    ans = "prime";
+  } else {
+    ans = num;
+  }
+  console.log(ans);
+}
+
+function runWithStdin() {
+  let input = "";
+  process.stdin.resume();
+  process.stdin.setEncoding("utf8");
+
+  process.stdin.on("data", (v) => {
+    input += v;
+  });
+  process.stdin.on("end", () => {
+    main(input.split("\n"));
+  });
+}
+runWithStdin();
